@@ -7,12 +7,12 @@
 # mount -t tmpfs tmpfs /tmp/
 # cd /tmp
 # wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
-# chmod +x make-chr.sh
 # nano make-chr.sh
 #
 # ROS change your version
 # PASSWORD must be changes !!!
 #
+# chmod +x make-chr.sh
 # ./make-chr.sh
 #
 ROS="6.46.8" && \
