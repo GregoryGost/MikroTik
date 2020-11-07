@@ -7,6 +7,9 @@
 # chmod +x make-chr.sh
 # ./make-chr.sh
 #
+# CHR will automatically resize the disc
+#
+# ========= Variables =========
 # ROS change your version
 # PASSWORD must be changes !!!
 #
