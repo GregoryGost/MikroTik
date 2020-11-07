@@ -10,6 +10,7 @@
 # nano make-chr.sh
 #
 # ROS change your version
+# MYNAME must be changes !!!
 # PASSWORD must be changes !!!
 #
 # chmod +x make-chr.sh
@@ -17,6 +18,7 @@
 #
 ROS="6.46.8" && \
 PASSWORD="CHANGEME" && \
+USERNAME="MYNAME" && \
 apt-get update && \
 apt install -y unzip qemu-utils pv && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
@@ -38,7 +40,8 @@ echo "/ip address add address=$ADDRESS interface=[/interface ethernet find where
 /ip service disable www
 /ip service disable api
 /ip service disable api-ssl
-/user set 0 name=root password=$PASSWORD
+/user add name=$USERNAME group=full password=$PASSWORD disabled=no
+/user set admin disabled=yes
 /ip dns set servers=1.1.1.1,1.0.0.1
 /system package update set channel=long-term
 /system package update check-for-updates
