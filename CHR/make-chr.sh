@@ -10,7 +10,7 @@
 # nano make-chr.sh
 #
 # ROS change your version
-# MYNAME must be changes !!!
+# USERNAME must be changes !!!
 # PASSWORD must be changes !!!
 #
 # chmod +x make-chr.sh
@@ -18,7 +18,7 @@
 #
 ROS="6.46.8" && \
 PASSWORD="CHANGEME" && \
-USERNAME="MYNAME" && \
+USERNAME="CHANGEME" && \
 apt-get update && \
 apt install -y unzip qemu-utils pv && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
@@ -32,7 +32,6 @@ sleep 5 && \
 mount /dev/nbd0p1 /mnt && \
 ADDRESS=`ip addr show eth0 | grep global | cut -d' ' -f 6 | head -n 1` && \
 GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
-PASSWORD="CHANGEME" && \
 echo "/ip address add address=$ADDRESS interface=[/interface ethernet find where name=ether1]
 /ip route add gateway=$GATEWAY
 /ip service disable telnet
