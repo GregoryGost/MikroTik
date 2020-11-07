@@ -20,15 +20,20 @@ ROS="6.46.8" && \
 PASSWORD="CHANGEME" && \
 USERNAME="CHANGEME" && \
 apt-get update && \
-apt install -y unzip qemu-utils pv && \
+apt install -y unzip qemu-utils && \
+sleep 5 && \
+echo "Download CHR image..." && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
 gunzip -c chr.img.zip > chr.img  && \
+sleep 5 && \
+echo "Convert CHR image..." && \
 qemu-img convert chr.img -O qcow2 chr.qcow2  && \
 modprobe nbd  && \
 qemu-nbd -c /dev/nbd0 chr.qcow2  && \
 sleep 5 && \
 partprobe /dev/nbd0 && \
 sleep 5 && \
+echo "Mount CHR image..." && \
 mount /dev/nbd0p1 /mnt && \
 ADDRESS=`ip addr show eth0 | grep global | cut -d' ' -f 6 | head -n 1` && \
 GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
@@ -46,7 +51,11 @@ echo "/ip address add address=$ADDRESS interface=[/interface ethernet find where
 /system package update check-for-updates
 /system package update install
  " > /mnt/rw/autorun.scr && \
+sleep 5 && \
+echo "Unmount CHR image..." && \
 umount /mnt && \
+sleep 5 && \
+echo "Write CHR image to /dev/vda..." && \
 dd if=/dev/nbd0 of=/dev/vda bs=4M oflag=sync && \
 sleep 5 && \
 killall qemu-nbd && \
