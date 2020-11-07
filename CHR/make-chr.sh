@@ -3,14 +3,15 @@
 # Digital Ocean Ubuntu, Debian
 #
 # Running:
-# wget https://raw.githubusercontent.com/GregoryGost/MikroTik/master/CHR/make-chr.sh
+# wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
 # chmod +x make-chr.sh
 # ./make-chr.sh
 #
 # ROS change your version
 # PASSWORD must be changes !!!
 #
-ROS="6.46.8"
+ROS="6.46.8" && \
+PASSWORD="CHANGEME" && \
 apt-get update && \
 apt install -y unzip && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
