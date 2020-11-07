@@ -1,24 +1,24 @@
 #!/bin/bash
 #
 # Digital Ocean Ubuntu, Debian
-#
-# Running:
-# wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
-# chmod +x make-chr.sh
-# ./make-chr.sh
-#
 # CHR will automatically resize the disc
 #
-# ========= Variables =========
+# Running:
+# mount -t tmpfs tmpfs /tmp/
+# cd /tmp
+# wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
+# chmod +x make-chr.sh
+# nano make-chr.sh
+#
 # ROS change your version
 # PASSWORD must be changes !!!
+#
+# ./make-chr.sh
 #
 ROS="6.46.8" && \
 PASSWORD="CHANGEME" && \
 apt-get update && \
 apt install -y unzip qemu-utils pv && \
-mount -t tmpfs tmpfs /tmp/ && \
-cd /tmp
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
 gunzip -c chr.img.zip > chr.img  && \
 qemu-img convert chr.img -O qcow2 chr.qcow2  && \
