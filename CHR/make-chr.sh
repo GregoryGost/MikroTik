@@ -1,9 +1,11 @@
 #!/bin/bash
 #
-# Digital Ocean Ubuntu, Debian
+# Digital Ocean Ubuntu, Debian (10,11)
 # CHR will automatically resize the disc
 #
-# Running:
+# !!!!!!!!!!!!!! WATCH !!!!!!!!!!!!!!!!!!!
+#
+# Getting Started: (commands and script mast be run from a root user only)
 # mount -t tmpfs tmpfs /tmp/
 # cd /tmp
 # wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
@@ -16,7 +18,7 @@
 # chmod +x make-chr.sh
 # ./make-chr.sh
 #
-ROS="6.46.8" && \
+ROS="6.48.6" && \
 PASSWORD="CHANGEME" && \
 USERNAME="CHANGEME" && \
 apt-get update && \
@@ -27,7 +29,10 @@ wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip
 gunzip -c chr.img.zip > chr.img  && \
 sleep 5 && \
 echo "Convert CHR image..." && \
+cd root/ &&\
 qemu-img convert chr.img -O qcow2 chr.qcow2  && \
+cp chr.qcow2 /tmp && \
+cd /tmp
 modprobe nbd  && \
 qemu-nbd -c /dev/nbd0 chr.qcow2  && \
 sleep 5 && \
