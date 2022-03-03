@@ -20,7 +20,7 @@ ROS="6.46.8" && \
 PASSWORD="CHANGEME" && \
 USERNAME="CHANGEME" && \
 apt-get update && \
-apt install -y unzip qemu-utils && \
+apt install -y wget unzip qemu-utils parted psmisc && \
 sleep 5 && \
 echo "Download CHR image..." && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
