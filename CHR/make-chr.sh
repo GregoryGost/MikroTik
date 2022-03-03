@@ -9,11 +9,6 @@
 # mount -t tmpfs tmpfs /tmp/
 # cd /tmp
 # wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
-# nano make-chr.sh
-#
-# ROS change your version
-# USERNAME must be changes !!!
-# PASSWORD must be changes !!!
 #
 # chmod +x make-chr.sh
 # ./make-chr.sh 6.48.6 admin admin
@@ -33,17 +28,23 @@ fi
 ROS="$1" && \
 USERNAME="$2" && \
 PASSWORD="$3" && \
+echo "ROS: $ROS" && \
+echo "USERNAME: $USERNAME" && \
+echo "PASSWORD: $PASSWORD" && \
 apt-get update && \
 apt install -y wget unzip qemu-utils parted psmisc && \
 sleep 5 && \
+echo "Go to root dir..." && \
+cd /root &&\
 echo "Download CHR image..." && \
 wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip  && \
 gunzip -c chr.img.zip > chr.img  && \
 sleep 5 && \
 echo "Convert CHR image..." && \
-cd /root &&\
 qemu-img convert chr.img -O qcow2 chr.qcow2  && \
-cp chr.qcow2 /tmp && \
+echo "Move chr.qcow2 to tmp dir..." && \
+mv chr.qcow2 /tmp && \
+echo "Go to tmp dir..." && \
 cd /tmp
 modprobe nbd  && \
 qemu-nbd -c /dev/nbd0 chr.qcow2  && \
