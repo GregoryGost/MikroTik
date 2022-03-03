@@ -23,11 +23,11 @@ if [ -z $1 ]; then
 	exit;
 fi
 if [ -z $2 ]; then
-	echo 'Specify RoS admin name !'
+	echo 'Specify RoS admin name!'
 	exit;
 fi
 if [ -z $3 ]; then
-	echo 'Specify RoS admin password !'
+	echo 'Specify RoS admin password!'
 	exit;
 fi
 ROS="$1" && \
