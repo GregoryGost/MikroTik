@@ -29,7 +29,7 @@ wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip
 gunzip -c chr.img.zip > chr.img  && \
 sleep 5 && \
 echo "Convert CHR image..." && \
-cd root/ &&\
+cd /root &&\
 qemu-img convert chr.img -O qcow2 chr.qcow2  && \
 cp chr.qcow2 /tmp && \
 cd /tmp
