@@ -28,9 +28,17 @@ fi
 ROS="$1" && \
 USERNAME="$2" && \
 PASSWORD="$3" && \
+INTERFACE=`ip link show | grep BROADCAST | cut -d' ' -f 2 | cut -d':' -f 1` && \
+ADDRESS=`ip addr show $INTERFACE | grep global | cut -d' ' -f 6 | head -n 1` && \
+GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
+echo "=== INFO ===" && \
 echo "ROS: $ROS" && \
 echo "USERNAME: $USERNAME" && \
 echo "PASSWORD: $PASSWORD" && \
+echo "INTERFACE: $INTERFACE" && \
+echo "ADDRESS: $ADDRESS" && \
+echo "GATEWAY: $GATEWAY" && \
+echo "=== INFO ===" && \
 apt-get update && \
 apt install -y wget unzip qemu-utils parted psmisc && \
 sleep 5 && \
@@ -53,9 +61,6 @@ partprobe /dev/nbd0 && \
 sleep 5 && \
 echo "Mount CHR image..." && \
 mount /dev/nbd0p1 /mnt && \
-INTERFACE=`ip link show | grep BROADCAST | cut -d' ' -f 2 | cut -d':' -f 1` && \
-ADDRESS=`ip addr show $INTERFACE | grep global | cut -d' ' -f 6 | head -n 1` && \
-GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
 echo "/ip address add address=$ADDRESS interface=[/interface ethernet find where name=ether1]
 /ip route add gateway=$GATEWAY
 /ip service disable telnet
