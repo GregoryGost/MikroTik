@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Digital Ocean Ubuntu, Debian (10,11)
+# Digital Ocean Ubuntu
 # CHR will automatically resize the disc
 #
 # !!!!!!!!!!!!!! WATCH !!!!!!!!!!!!!!!!!!!
