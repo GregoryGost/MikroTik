@@ -16,11 +16,23 @@
 # PASSWORD must be changes !!!
 #
 # chmod +x make-chr.sh
-# ./make-chr.sh
+# ./make-chr.sh 6.48.6 admin admin
 #
-ROS="6.48.6" && \
-PASSWORD="CHANGEME" && \
-USERNAME="CHANGEME" && \
+if [ -z $1 ]; then
+	echo 'Specify version of RouterOS!'
+	exit;
+fi
+if [ -z $2 ]; then
+	echo 'Specify RoS admin name !'
+	exit;
+fi
+if [ -z $3 ]; then
+	echo 'Specify RoS admin password !'
+	exit;
+fi
+ROS="$1" && \
+USERNAME="$2" && \
+PASSWORD="$3" && \
 apt-get update && \
 apt install -y wget unzip qemu-utils parted psmisc && \
 sleep 5 && \
