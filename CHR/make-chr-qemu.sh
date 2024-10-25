@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Digital Ocean Ubuntu
+# Ubuntu on QEMU
 # CHR will automatically resize the disc
 #
 # !!!!!!!!!!!!!! WATCH !!!!!!!!!!!!!!!!!!!
@@ -10,8 +10,8 @@
 # cd /tmp
 # wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
 #
-# chmod +x make-chr.sh
-# ./make-chr.sh 6.48.6 admin admin
+# sudo chmod +x make-chr.sh
+# sudo ./make-chr.sh 7.16.1 login pass123
 #
 if [ -z $1 ]; then
 	echo 'Specify version of RouterOS!'
