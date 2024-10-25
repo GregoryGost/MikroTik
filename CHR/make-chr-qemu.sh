@@ -10,15 +10,19 @@
 # cd /tmp
 # wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
 #
-# sudo chmod +x make-chr.sh
-# sudo ./make-chr.sh 7.16.1 login pass123
+# chmod +x make-chr.sh
+# ./make-chr.sh 7.16.1 login pass123
 #
 if [ -z $1 ]; then
 	echo 'Specify version of RouterOS!'
 	exit;
 fi
 if [ -z $2 ]; then
-	echo 'Specify RoS admin name!'
+  echo 'Specify RoS admin name!'
+	exit;
+fi
+if [[ "$2" == "admin" ]]; then
+  echo 'The RoS admin name must not be the same as "admin"!'
 	exit;
 fi
 if [ -z $3 ]; then
@@ -61,20 +65,21 @@ partprobe /dev/nbd0 && \
 sleep 5 && \
 echo "Mount CHR image..." && \
 mount /dev/nbd0p1 /mnt && \
-echo "/ip address add address=$ADDRESS interface=[/interface ethernet find where name=ether1]
-/ip route add gateway=$GATEWAY
-/ip service disable telnet
-/ip service disable ftp
-/ip service disable www
-/ip service disable api
-/ip service disable api-ssl
-/user add name=$USERNAME group=full password=$PASSWORD disabled=no
-/user set admin disabled=yes
-/ip dns set servers=1.1.1.1,1.0.0.1
-/system package update set channel=long-term
-/system package update check-for-updates
-/system package update install
- " > /mnt/rw/autorun.scr && \
+echo "/ip/address/add address=$ADDRESS interface=[/interface/ethernet/find where default-name=ether1]
+/ip/route/add gateway=$GATEWAY
+/ip/service/disable telnet
+/ip/service/disable ftp
+/ip/service/disable www
+/ip/service/disable www-ssl
+/ip/service/disable api
+/ip/service/disable api-ssl
+/user/add name=$USERNAME group=full password=$PASSWORD disabled=no
+/user/set admin disabled=yes
+/ip/dns/set servers=1.1.1.1,1.0.0.1
+/system/package/update/set channel=stable
+/system/package/update/check-for-updates
+/system/package/update/install
+ " > /mnt/rw/autorun.rsc && \
 sleep 5 && \
 echo "Unmount CHR image..." && \
 umount /mnt && \
