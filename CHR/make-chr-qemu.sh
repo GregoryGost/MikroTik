@@ -10,8 +10,8 @@
 # cd /tmp
 # wget https://raw.githubusercontent.com/GregoryGost/MikroTik/refs/heads/master/CHR/make-chr-qemu.sh
 #
-# chmod +x make-chr.sh
-# ./make-chr.sh 7.16.1 login pass123
+# chmod +x make-chr-qemu.sh
+# ./make-chr-qemu.sh 7.16.1 login pass123
 #
 if [ -z $1 ]; then
 	echo 'Specify version of RouterOS!'
@@ -42,6 +42,7 @@ INTERFACE=`ip link show | grep BROADCAST | cut -d' ' -f 2 | cut -d':' -f 1` && \
 ADDRESS=`ip addr show $INTERFACE | grep global | cut -d' ' -f 6 | head -n 1` && \
 GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
 echo "=== INFO ===" && \
+echo "DEVICE: $DEVICE" && \
 echo "ROS: $ROS" && \
 echo "USERNAME: $USERNAME" && \
 echo "PASSWORD: $PASSWORD" && \
