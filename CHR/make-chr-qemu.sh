@@ -8,7 +8,7 @@
 # Getting Started: (commands and script mast be run from a root user only)
 # mount -t tmpfs tmpfs /tmp/
 # cd /tmp
-# wget https://github.com/GregoryGost/MikroTik/raw/master/CHR/make-chr.sh
+# wget https://raw.githubusercontent.com/GregoryGost/MikroTik/refs/heads/master/CHR/make-chr-qemu.sh
 #
 # chmod +x make-chr.sh
 # ./make-chr.sh 7.16.1 login pass123
@@ -29,6 +29,12 @@ if [ -z $3 ]; then
 	echo 'Specify RoS admin password!'
 	exit;
 fi
+if [[ "$(mount | grep ' / ' | awk '{ print $1 }')" =~ ^/dev/mapper ]]; then
+  DEVICE=$(findmnt -n -o SOURCE / | xargs -I{} dmsetup info -c {} | awk '$1 == "Name" {print $NF}' | xargs -I{} lsblk -np -o NAME,MOUNTPOINT | awk '/^\/dev\/sd/')
+else
+  DEVICE=$(lsblk -o PKNAME,NAME,MOUNTPOINT | grep $(findmnt -n -o SOURCE /) | awk '{print $1}')
+fi
+#
 ROS="$1" && \
 USERNAME="$2" && \
 PASSWORD="$3" && \
@@ -84,8 +90,8 @@ sleep 5 && \
 echo "Unmount CHR image..." && \
 umount /mnt && \
 sleep 5 && \
-echo "Write CHR image to /dev/vda..." && \
-dd if=/dev/nbd0 of=/dev/vda bs=4M oflag=sync && \
+echo "Write CHR image to $DEVICE..." && \
+dd if=/dev/nbd0 of=$DEVICE bs=4M oflag=sync && \
 sleep 5 && \
 killall qemu-nbd && \
 sleep 5 && \
