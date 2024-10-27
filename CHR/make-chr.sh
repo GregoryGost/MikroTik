@@ -14,6 +14,7 @@ if [ -z $1 ]; then
 	echo 'Specify version of RouterOS!'
 	exit;
 fi
+echo "Install funzip" && \
 apt-get update && \
 apt install -y funzip
 if [[ "$(mount | grep ' / ' | awk '{ print $1 }')" =~ ^/dev/mapper ]]; then
