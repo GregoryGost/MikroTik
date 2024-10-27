@@ -42,15 +42,17 @@ while true; do
   fi
 done
 #
-echo "Install unzip" && \
+echo "Install wget and unzip" && \
 apt-get update && \
-apt install -y unzip && \
-echo "Download CHR image chr-$ROS.img.zip" && \
-curl -L https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip && \
-echo "Unzip CHR image chr-$ROS.img.zip > chr-$ROS.img" && \
-gunzip -c chr-$ROS.img.zip > chr-$ROS.img  && \
+apt install -y wget unzip && \
+echo "Download CHR image chr-$ROS.img.zip as chr.img.zip" && \
+wget https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip -O chr.img.zip && \
+echo "Unzip CHR image chr.img.zip > chr.img" && \
+gunzip -c chr.img.zip > chr.img  && \
+sleep 5 && \
 echo "Write CHR image to $DEVICE" && \
-dd if=chr-$ROS.img of=$DEVICE bs=1M
+dd if=chr.img of=$DEVICE && \
+sync && \
 sleep 5 && \
 echo "Ok, hard reboot" && \
 echo 1 > /proc/sys/kernel/sysrq && \
