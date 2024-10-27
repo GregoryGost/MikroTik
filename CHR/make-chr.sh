@@ -34,7 +34,7 @@ echo "VPS IPv4 ADDRESS: $ADDRESS" && \
 echo "VPS GATEWAY: $GATEWAY" && \
 echo "=== /SAVE INFO ==="
 #
-echo "Please save the information from the SAVE INFO block !!! And press any key."
+echo "Please save the information from the SAVE INFO block !!! And press any key (not Enter)."
 while true; do
   read -rsn1 key
   if [[ -n "$key" ]]; then
