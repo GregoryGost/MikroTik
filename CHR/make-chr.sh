@@ -14,9 +14,6 @@ if [ -z $1 ]; then
 	echo 'Specify version of RouterOS!'
 	exit;
 fi
-echo "Install funzip" && \
-apt-get update && \
-apt install -y funzip
 if [[ "$(mount | grep ' / ' | awk '{ print $1 }')" =~ ^/dev/mapper ]]; then
   DEVICE=$(findmnt -n -o SOURCE / | xargs -I{} dmsetup info -c {} | awk '$1 == "Name" {print $NF}' | xargs -I{} lsblk -np -o NAME,MOUNTPOINT | awk '/^\/dev\/sd/')
 else
@@ -45,8 +42,15 @@ while true; do
   fi
 done
 #
-echo "Write CHR image to $DEVICE..." && \
-curl -L https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip | funzip | dd of=$DEVICE bs=1M
+echo "Install unzip" && \
+apt-get update && \
+apt install -y unzip && \
+echo "Download CHR image chr-$ROS.img.zip" && \
+curl -L https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip && \
+echo "Unzip CHR image chr-$ROS.img.zip > chr-$ROS.img" && \
+gunzip -c chr-$ROS.img.zip > chr-$ROS.img  && \
+echo "Write CHR image to $DEVICE" && \
+dd if=chr-$ROS.img of=$DEVICE bs=1M
 sleep 5 && \
 echo "Ok, hard reboot" && \
 echo 1 > /proc/sys/kernel/sysrq && \
