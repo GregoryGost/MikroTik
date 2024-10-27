@@ -6,8 +6,7 @@
 #
 # Getting Started: (commands and script mast be run from a root user only)
 # sudo su - root
-# wget https://raw.githubusercontent.com/GregoryGost/MikroTik/refs/heads/master/CHR/make-chr.sh
-#
+# curl -O https://raw.githubusercontent.com/GregoryGost/MikroTik/refs/heads/master/CHR/make-chr.sh
 # chmod +x make-chr.sh
 # ./make-chr.sh 7.16.1
 #
@@ -18,7 +17,7 @@ fi
 if [[ "$(mount | grep ' / ' | awk '{ print $1 }')" =~ ^/dev/mapper ]]; then
   DEVICE=$(findmnt -n -o SOURCE / | xargs -I{} dmsetup info -c {} | awk '$1 == "Name" {print $NF}' | xargs -I{} lsblk -np -o NAME,MOUNTPOINT | awk '/^\/dev\/sd/')
 else
-  DEVICE=$(lsblk -o PKNAME,NAME,MOUNTPOINT | grep $(findmnt -n -o SOURCE /) | awk '{print $1}')
+  DEVICE=$(findmnt -n -o SOURCE / | sed 's/[0-9]*$//')
 fi
 #
 ROS="$1" && \
