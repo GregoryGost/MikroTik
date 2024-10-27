@@ -42,6 +42,8 @@ while true; do
   fi
 done
 #
+apt-get update && \
+apt install -y funzip && \
 echo "Write CHR image to $DEVICE..." && \
 curl -L https://download.mikrotik.com/routeros/$ROS/chr-$ROS.img.zip | funzip | dd of=$DEVICE bs=1M
 sleep 5 && \
