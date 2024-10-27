@@ -26,14 +26,16 @@ INTERFACE=`ip link show | grep BROADCAST | cut -d' ' -f 2 | cut -d':' -f 1` && \
 ADDRESS=`ip addr show $INTERFACE | grep global | cut -d' ' -f 6 | head -n 1` && \
 GATEWAY=`ip route list | grep default | cut -d' ' -f 3` && \
 echo "=== INFO ===" && \
-echo "DEVICE: $DEVICE" && \
-echo "ROS: $ROS" && \
-echo "INTERFACE: $INTERFACE" && \
-echo "ADDRESS: $ADDRESS" && \
-echo "GATEWAY: $GATEWAY" && \
-echo "=== INFO ==="
+echo "VPS ROOT DEVICE: $DEVICE" && \
+echo "ROS VERSION: $ROS" && \
+echo "UBUNTU INTERFACE: $INTERFACE" && \
+echo "=== /INFO ===" && \
+echo "=== SAVE INFO ===" && \
+echo "VPS IPv4 ADDRESS: $ADDRESS" && \
+echo "VPS GATEWAY: $GATEWAY" && \
+echo "=== /SAVE INFO ==="
 #
-echo "Please save the information from the INFO block !!! And press any key."
+echo "Please save the information from the SAVE INFO block !!! And press any key."
 while true; do
   read -rsn1 key
   if [[ -n "$key" ]]; then
